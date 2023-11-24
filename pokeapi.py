@@ -1,6 +1,8 @@
 import requests
 import os
+# import main
 
+# print(__main__)
 class Pokemon:
     def __init__(
         self, ja_name='', en_name='', weight=0.0, height=0.0, flavor_text='', img=None
@@ -15,7 +17,7 @@ class Pokemon:
 def get_pokemon(id):
       pokemon = Pokemon()
 
-      resuponse = requests.get(f'http://pokeapi.co/ape/v2/pokemon/{id}')
+      response = requests.get(f'https://pokeapi.co/api/v2/pokemon/{id}')
       pokeapi = response.json()
 
       species_url = pokeapi['species']['url']
@@ -36,7 +38,7 @@ def get_pokemon(id):
             pokemon.ja_name = name['name']
             break
     # 日本語のフレーバーテキスト取得
-      flavor_text_entries = pokeapi_apecies['flavor_text_entries']
+      flavor_text_entries = pokeapi_species['flavor_text_entries']
       for text in flavor_text_entries:
         if text['language']['name'] == 'ja':
             pokemon.flavor_text = text['flavor_text']
@@ -47,9 +49,11 @@ def get_pokemon(id):
       return pokemon
 
 # 画像のパスを取得、インスタンスに設定
-def download_img(pokemon: Pokemon):
+def download_img(pokemon:Pokemon):
     # 同じファイル名があるか確認、無ければPokeApiから画像ダウンロード
+    # フォルダの絶対パスを取得
     current_dir = os.path.dirname(__file__)
+    # print(__file__)
     img_path = f'{current_dir}/img/{pokemon.en_name}.png'
     # 同名の画像ファイルが無ければダウンロードして保存
     if not os.path.isfile(img_path):
@@ -61,8 +65,7 @@ def download_img(pokemon: Pokemon):
 
     # ローカルの画像パスを設定
     pokemon.img = img_path
-
-    print(get_pokemon(1).flavor_text)
+# print(get_pokemon(1).flavor_text)   
 
        
 

@@ -1,6 +1,13 @@
 import tkinter as tk
 import pokeapi
 
+def key(e):
+    key = e.keysym
+    print(e.keysym)
+
+def mouse(e):
+    print(e.x)
+
 
 # ボタンクリック時に実行する関数
 def change_data(entry_id):
@@ -57,6 +64,13 @@ if __name__ == '__main__':
     image_label.pack()
     data_label.pack()
     flavor_text_msg.pack(pady=(10, 0))
+
+    # 画面上のどこをクリックしたか判断する
+
+    root.bind('<key>',key)
+    root.bind('<Button-1>',mouse)
+    root.bind('<Motion>',mouse)
+
 
 		# メインループ
     root.mainloop()
